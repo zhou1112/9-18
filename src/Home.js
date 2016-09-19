@@ -1,25 +1,20 @@
 import React, { PropTypes } from 'react'
-import { Router, Route, browserHistory,IndexRoute } from 'react-router';
+
+import { hashHistory } from 'react-router';
 
 class Home extends React.Component {
-    btnca(){
-        browserHistory.push('a')
-    }
-    btncb(){
-        browserHistory.push('m')
-    }
-    render () {
-        return(
-            <div>
-                <div className="jumbotron" style={{textAlign:'center'}}>
-                    <h1>你好</h1>
-                    <p>do you live my home?</p>
-                    <p><a className="btn btn-primary btn-lg" role="button" onClick={this.btnca.bind(this)}>go to about</a></p>
-                    <p><a className="btn btn-primary btn-lg" role="button" onClick={this.btncb.bind(this)}>go to main</a></p>
-                </div>
-            </div>
-        )
-    }
+  handleClick(){
+    hashHistory.push('work');
+  }
+  render () {
+    return(
+      <div className="jumbotron">
+        <h1>欢迎光临</h1>
+        <p>here is Newming 的 Concer</p>
+        <p><a className="btn btn-primary btn-lg" role="button" onClick={this.handleClick.bind(this)}>我的工作</a></p>
+      </div>
+    )
+  }
 }
 
 export default Home;

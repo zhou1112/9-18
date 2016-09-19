@@ -1,44 +1,40 @@
-import React, { PropTypes } from 'react'
-import { gitmd } from './utils/helpers.js'
-import marked from 'marked'
-import hljs from 'highlight.js'
+import React, { PropTypes } from 'react';
 
+import { getMd } from '../uitll/helper';
+
+import marked from 'marked';
+import Hs from 'highlight.js'
 class Blog extends React.Component {
-    constructor(){
-        super();
-        this.state={
-            data:'',
-            wait:true
-        }
+  constructor(){
+    super();
+    this.state={
+      data:"",
+      wait:true
     }
-    returns(){
-        return(marked(this.state.data))
-    }
-    componentDidMount() {
-        let xss=this.props.params.title
-            gitmd(xss)
-            .then((we)=>
-                   this.setState({
-                      data:we.as
-                  })
-             )
-             .catch(()=>{
-                 alert('404')
-             })
-
-    }
-    render () {
-        marked.setOptions({
-            highlight:function(code){
-                return hljs.highlightAuto(code).value;
-            }
-        });
-        return(
-            <div>
-                <div dangerouslySetInnerHTML={{__html: this.returns()}} className="post-content" />
-            </div>
-        )
-    }
+  }
+  componentDidMount(){
+    getMd(this.props.params.title)
+      .then( (recData) => {
+        //console.log(recData.getJson);
+          this.setState({
+            data:recData.getMd,
+            wait:false
+          })
+      });
+  }
+  render () {
+    let content = this.state.wait ? '~亲· 稍等' : marked(this.state.data)
+    marked.setOptions({
+      highlight: function (code) {
+        return Hs.highlightAuto(code).value;
+          }
+      });
+    return(
+      <div>
+        <div dangerouslySetInnerHTML={{__html:content}} className="post-content"/>
+      </div>
+    )
+  }
 }
 
 export default Blog;
