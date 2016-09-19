@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import axios from 'axios';
-import { seachGit } from '../uitll/helper';
+import { getJson } from '../uitll/helper';
 
 class About extends React.Component {
   constructor(){

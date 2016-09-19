@@ -1,16 +1,37 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes } from 'react';
 
+import { getMd } from '../uitll/helper';
+
+import marked from 'marked';
+import Hs from 'highlight.js'
 class Blog extends React.Component {
+  constructor(){
+    super();
+    this.state={
+      data:"",
+      wait:true
+    }
+  }
+  componentDidMount(){
+    getMd(this.props.params.title)
+      .then( (recData) => {
+        //console.log(recData.getJson);
+          this.setState({
+            data:recData.getMd,
+            wait:false
+          })
+      });
+  }
   render () {
-    // console.log(this.props);
+    let content = this.state.wait ? '~亲· 稍等' : marked(this.state.data)
+    marked.setOptions({
+      highlight: function (code) {
+        return Hs.highlightAuto(code).value;
+          }
+      });
     return(
       <div>
-        {this.props.params.title=='a' ? '我是A页面' :
-          this.props.params.title=='b' ? '我是B页面' :
-          this.props.params.title=='c' ? '我是C页面' :
-          this.props.params.title=='d' ? '我是D页面' :
-          this.props.params.title=='e' ? '我是E页面' : '您访问的页面没有内容'
-        }
+        <div dangerouslySetInnerHTML={{__html:content}} />
       </div>
     )
   }

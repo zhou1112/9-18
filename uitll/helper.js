@@ -12,7 +12,6 @@ function seachGit (add) {
     alert(error);
   })
 }
-export {seachGit}
 
 
 function getJson() {
@@ -26,4 +25,15 @@ function getJson() {
      });
  }
 
- export { getJson };
+ function getMd(add) {
+    let addless = `https://raw.githubusercontent.com/zhou1112/9-18xiawu/master/blog/${add}.md`;
+    return axios.get(addless)
+      .then( (res) => (
+        { getMd:res.data }
+      ))
+      .catch(function (error) {
+        alert(error);
+      });
+  }
+
+ export { getJson,seachGit,getMd };
